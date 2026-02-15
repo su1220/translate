@@ -16,19 +16,21 @@ app.post("/api/convert", async (req, res) => {
   }
 
   try {
-    const url = new URL("https://www.google.com/transliterate");
-    url.searchParams.set("langpair", "ja-Hira|ja");
+    const url = new URL("https://inputtools.google.com/request");
     url.searchParams.set("text", text);
+    url.searchParams.set("itc", "ja-t-i0-und");
+    url.searchParams.set("num", "5");
 
     const response = await fetch(url.toString());
     const data = await response.json();
 
-    // Google Transliterate API returns: [[input, [candidates...]], ...]
-    const result = (data as [string, string[]][])
-      .map(([, candidates]) => candidates[0] || "")
-      .join("");
+    if (data[0] !== "SUCCESS") {
+      res.status(500).json({ error: "変換に失敗しました" });
+      return;
+    }
 
-    res.json({ result });
+    const candidates: string[] = data[1][0][1];
+    res.json({ result: candidates[0], candidates });
   } catch (error) {
     console.error("Conversion error:", error);
     res.status(500).json({ error: "変換に失敗しました" });
