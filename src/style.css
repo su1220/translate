@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
+    sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.description {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #4a90d9;
+}
+
+#convert-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 16px 0;
+  background: #4a90d9;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#convert-btn:hover {
+  background: #357abd;
+}
+
+#convert-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.output-section {
+  position: relative;
+}
+
+.output-box {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.output-box:empty::before {
+  content: "変換結果がここに表示されます";
+  color: #aaa;
+}
+
+#copy-btn {
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: #666;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#copy-btn:hover {
+  background: #444;
+}
+
+#copy-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.loading #convert-btn::after {
+  content: " ...";
+}

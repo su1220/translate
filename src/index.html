@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ローマ字→日本語変換</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>ローマ字 → 日本語変換</h1>
+      <p class="description">ローマ字を入力すると、ひらがなにリアルタイム変換されます。「変換」ボタンで漢字交じりの日本語に変換します。</p>
+
+      <div class="input-section">
+        <label for="input">ローマ字入力（ひらがなに自動変換）</label>
+        <textarea id="input" rows="4" placeholder="ここにローマ字を入力してください（例: kyouhaいいtenkidesu）"></textarea>
+      </div>
+
+      <button id="convert-btn" type="button">変換</button>
+
+      <div class="output-section">
+        <label>変換結果</label>
+        <div id="output" class="output-box"></div>
+        <button id="copy-btn" type="button" disabled>コピー</button>
+      </div>
+    </div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
