@@ -1,16 +1,22 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+export const config = {
+  runtime: "edge",
+};
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request) {
   if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
-    return;
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
-  const { text } = req.body;
+  const { text } = await req.json();
 
   if (!text || typeof text !== "string") {
-    res.status(400).json({ error: "text is required" });
-    return;
+    return new Response(JSON.stringify({ error: "text is required" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   try {
@@ -22,16 +28,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const response = await fetch(url.toString());
     const data = await response.json();
 
-    // Response: ["SUCCESS", [["input", ["candidate1", ...], ...]]]
     if (data[0] !== "SUCCESS") {
-      res.status(500).json({ error: "変換に失敗しました" });
-      return;
+      return new Response(JSON.stringify({ error: "変換に失敗しました" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const candidates: string[] = data[1][0][1];
-    res.json({ result: candidates[0], candidates });
+    return new Response(JSON.stringify({ result: candidates[0], candidates }), {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Conversion error:", error);
-    res.status(500).json({ error: "変換に失敗しました" });
+    return new Response(JSON.stringify({ error: "変換に失敗しました" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
